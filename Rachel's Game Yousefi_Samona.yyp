@@ -45,6 +45,7 @@
     {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},
     {"id":{"name":"oCamera","path":"objects/oCamera/oCamera.yy",},},
     {"id":{"name":"Rachel_Duck","path":"sprites/Rachel_Duck/Rachel_Duck.yy",},},
+    {"id":{"name":"TODO","path":"scripts/TODO/TODO.yy",},},
     {"id":{"name":"general_functions","path":"scripts/general_functions/general_functions.yy",},},
     {"id":{"name":"Rachel_Walk","path":"sprites/Rachel_Walk/Rachel_Walk.yy",},},
     {"id":{"name":"Rachel_Run","path":"sprites/Rachel_Run/Rachel_Run.yy",},},

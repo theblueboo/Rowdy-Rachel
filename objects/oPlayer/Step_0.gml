@@ -115,32 +115,81 @@ getControls()
 	// Cap falling speed
 	if yspd > termVel {yspd = termVel;};
 	
-	// Movement
+	// Collision
 	var _subPixel = .5;
-	if place_meeting(x , y + yspd, oWall)
+	
+	// Upward Y Collision
+	if yspd < 0 && place_meeting(x,y+yspd,oWall)
 	{
-		// wall check
-		var _pixelCheck = _subPixel * sign(yspd);
-		while !place_meeting(x,y + _pixelCheck, oWall)
+		//Jump into sloped Ceilings
+		var _slopeSlide = false;
+		
+		//Slide upleft
+		if moveDir == 0 && !place_meeting(x - abs(yspd)-1, y + yspd, oWall)
 		{
-			y += _pixelCheck;
+			while place_meeting( x,y+yspd,oWall) {x -=1;};
+			_slopeSlide = true;
 		}
 		
-		// Head bonk
-		if yspd < 0
+		// Future: Sonic Style Slope collision for loop deloops
+		
+		
+		//Slide Upright
+		if moveDir == 0 && !place_meeting(x + abs(yspd)+1, y + yspd, oWall)
 		{
-			jumpHoldTimer = 0;
-		};
-	
-		//Set yspd to zero to collide with wall
-		yspd = 0;
+			while place_meeting( x,y+yspd,oWall) {x +=1;};
+			_slopeSlide = true;
 		}
-	
-		// Set if on the ground
-		if yspd >= 0  && place_meeting (x, y+1, oWall)
+		
+		//Normal Y Collision
+		if !_slopeSlide
 		{
-			setOnGround(true);
+			// wall check
+			var _pixelCheck = _subPixel * sign(yspd);
+			while !place_meeting(x,y + _pixelCheck, oWall)
+			{
+				y += _pixelCheck;
+			}
+		
+			// Head bonk (Different for slopes and ceilings)
+			if yspd < 0
+			{
+				jumpHoldTimer = 0;
+			};
+	
+			//Set yspd to zero to collide with wall
+			yspd = 0;
 		}
+	}
+	
+	// Downward Y Collision
+	if yspd >= 0
+	{
+		if place_meeting(x , y + yspd, oWall)
+		{
+			// wall check
+			var _pixelCheck = _subPixel * sign(yspd);
+			while !place_meeting(x,y + _pixelCheck, oWall)
+			{
+				y += _pixelCheck;
+			}
+		
+			// Head bonk (Different for slopes and ceilings)
+			//if yspd < 0
+			//{
+			//	jumpHoldTimer = 0;
+			//};
+	
+			//Set yspd to zero to collide with wall
+			yspd = 0;
+			}
+	
+			// Set if on the ground
+			if place_meeting (x, y+1, oWall)
+			{
+				setOnGround(true);
+			}
+	}
 		
 	
 	
